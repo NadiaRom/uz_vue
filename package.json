@@ -8,7 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.6.6"
+    "es6-promise": "^4.2.6",
+    "leaflet": "^1.4.0",
+    "vue": "^2.6.6",
+    "vue-scrollto": "^2.14.0",
+    "vue-simple-suggest": "^1.8.3",
+    "vue-tippy": "^2.1.0",
+    "vue2-leaflet": "^2.0.1",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
@@ -17,6 +24,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
