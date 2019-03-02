@@ -1,6 +1,6 @@
 <template>
   <main id="app">
-    <Map msg="Map!!!"/>
+    <Map/>
   </main>
 </template>
 
