@@ -3,7 +3,7 @@ module.exports = {
         devtool: 'source-map'
     },
     publicPath: process.env.NODE_ENV === 'production'
-          ? '/uz-vue/dist'
+          ? '/uz_vue/dist'
           : '/'
         
 }
