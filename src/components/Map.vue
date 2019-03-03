@@ -4,16 +4,49 @@
             :zoom.sync="zoom"
             :center="center"
             :bounds="bounds"
-            :min-zoom="10"
-            :max-zoom="3">
+            :min-zoom="6"
+            :max-zoom="10"
+            :max-bounds="bounds">
+
             <l-tile-layer
                 :name="tileProvider.name"
                 :visible="tileProvider.visible"
                 :url="tileProvider.url"
                 :attribution="tileProvider.attribution"
-                layer-type="base"/>
+                layer-type="base"
+            />
 
-            <!-- <l-control-zoom :position="zoomPosition" /> -->
+            <l-layer-group>
+                <l-circle
+                    v-for="m in dots"
+                    :key="m.id"
+                    :lat-lng="m.position"
+                    :radius="m.r"
+                    :weight="0.5"
+                    color="#f77a52"
+                    fill-color="#f77a52"
+                    :fill-opacity="0.6"
+                    :bubbling-mouse-events="true"
+                    @click="setStation(m.id)"
+                >
+                    <l-tooltip v-if="!$store.state.isTouch">
+                        <div class="map_tip">
+                            <h4>{{ m.name }}</h4>
+                            <p>{{ Math.round(m.kpas) }} пасажирів на добу</p>
+                        </div>
+                    </l-tooltip>
+                    <l-popup v-if="$store.state.isTouch">
+                        <div class="map_tip">
+                            <h4>{{ m.name }}</h4>
+                            <p>{{ Math.round(m.kpas) }} пасажирів на добу</p>
+                            <button type="button"
+                                @click="setStation(m.id)">
+                                Детальніше
+                            </button>
+                        </div>
+                    </l-popup>
+                </l-circle>
+            </l-layer-group>
         </l-map>
     </figure>
 </template>
@@ -21,7 +54,9 @@
 <script>
 import 'vue-simple-suggest/lib/polyfills';
 import VueSimpleSuggest from 'vue-simple-suggest';
-import {LMap, LTileLayer, LControlZoom} from 'vue2-leaflet';
+import {LMap, LTileLayer, LLayerGroup, LCircle, LTooltip, LPopup} from 'vue2-leaflet';
+import { scalePow } from 'd3-scale';
+import { mapActions } from 'vuex'
 
 export default {
     name: 'Map',
@@ -29,32 +64,59 @@ export default {
         VueSimpleSuggest,
         LMap,
         LTileLayer,
-        LControlZoom,
+        LLayerGroup,
+        LTooltip,
+        LPopup,
+        LCircle,
     },
     data() {
         return {
             tileProvider: {
-                name: 'OSM',
+                name: 'OpenStreetMap',
                 visible: true,
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+                url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
             },
-            zoom: 8,
+            zoom: 6,
             bounds: L.latLngBounds(
                     { 'lat': 44.17, 'lng': 21.55 },
                     { 'lat': 52.72, 'lng': 40.49 }
                 ),
+            scaleR: scalePow()
+                .exponent(0.5)
+                .domain([100, 40000])
+                .range([2500, 35000]),
+            center: [48.85, 31.177],
         }
     },
     computed: {
-        center: function() {
-            const st = this.$store.getters.currentStation
-            return [st.lat, st.lon];
-        }
-    }
+        dots: function () {
+            const that = this;
+            return Object.values(this.$store.state.data)
+                .map(d => {
+                    return {
+                        name: d.name,
+                        id: d.id,
+                        kpas: d.kpas,
+                        position: {
+                            lat: d.lat,
+                            lng: d.lon,
+                        },
+                        r: that.scaleR(d.kpas),
+                    };
+                })
+        },
+    },
+
+    methods: {
+        ...mapActions([
+            'setStation',
+        ]),
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang='scss' scoped>
+@import "~leaflet/dist/leaflet.css";
 </style>

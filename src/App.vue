@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Map from './components/Map.vue'
-import Yearly from './components/Yearly.vue'
+import Daily from './components/Daily.vue'
 import Weekday from './components/Weekday.vue'
 import Hourly from './components/Hourly.vue'
 
@@ -15,9 +16,24 @@ export default {
   name: 'app',
   components: {
     Map,
-    Yearly,
+    Daily,
     Weekday,
     Hourly,
+  },
+
+  mounted() {
+    const q = '(touch-enabled),(-webkit-touch-enabled),(-moz-touch-enabled),(-o-touch-enabled),(-ms-touch-enabled),(heartz)'
+    if (('ontouchstart' in window)
+      || window.DocumentTouch
+      || window.matchMedia(q).matches
+    ) {
+      this.setTouch(true) }
+  },
+
+  methods: {
+    ...mapActions([
+      'setTouch',
+    ])
   }
 }
 </script>

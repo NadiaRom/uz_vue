@@ -17,10 +17,17 @@ body {
     * {
         box-sizing: border-box;
         outline: none;
+        margin: 0;
+        padding: 0;
     }
 }
 
-#map {
+#Map {
     width: 100vw;
-    height: 70vw;
+    height: 70vh;
+
+    .map_circle {
+        background-color: rgba($orange, 0.7);
+        border-radius: 100%;
+    }
 }
