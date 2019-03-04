@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import data from '@/assets/data/all_stations.json';
+// import * as d3 from 'd3';
 
 Vue.use(Vuex)
 
 // root state object.
 // each Vuex instance is just a single state tree.
 const state = {
-    activeStation: '',
+    activeStation: '2200001', // Kyiv Main
     data: data,
     isTouch: false,
+    cols: {
+        orange: '#f77a52',
+        dark: '#332532',
+        bgcol: '#f6f6f6',
+        fontcol: '#555555',
+    }
 }
 
 // mutations are operations that actually mutates the state.
@@ -23,7 +30,7 @@ const mutations = {
     },
     setTouch (state, t) {
         state.isTouch = t === true;
-    }
+    },
 }
 
 // actions are functions that cause side effects and can involve
@@ -35,9 +42,7 @@ const actions = {
 
 // getters are functions
 const getters = {
-    currentStation: state => (state.activeStation in state.data)
-        ? state.data[state.activeStation]
-        : state.data['2200001'], // Kyiv Main
+    currentStation: (state) => state.data[state.activeStation],
 
     stationPoints: state => Object.values(state.data)
         .map(d => {
@@ -51,23 +56,12 @@ const getters = {
                 },
             };
         }),
+    
+    maxDaily: state => d3.max([
+        d3.max(state.data[state.activeStation].daily, d => d.departure),
+        d3.max(state.data[state.activeStation].daily, d => d.arrival),
+    ]),
 
-//   stationPoints: state => {
-//       return {
-//         type: 'FeatureCollection',
-//         features: Object.values(state.data)
-//             .map(d => {
-//                 return {
-//                     type: 'Feature',
-//                     geometry: {
-//                         type: 'Point',
-//                         coordinates: [d.lat, d.lon],
-//                     },
-//                     properties: {name: d.name, kpas: d.kpas},
-//                 };
-//             }),
-//         };
-//     },
 }
 
 // A Vuex instance is created by combining the state, mutations, actions,

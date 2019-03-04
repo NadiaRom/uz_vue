@@ -1,6 +1,7 @@
 <template>
   <main id="app">
     <Map/>
+    <Daily/>
   </main>
 </template>
 
@@ -39,5 +40,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/style.scss';
+@import 'assets/scss/style.scss';
 </style>

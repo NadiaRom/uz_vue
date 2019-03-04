@@ -1,0 +1,86 @@
+@import './vars.scss';
+
+
+body {
+    color: $fontcol;
+    background-color: $bgcol; 
+    margin: 0;
+    font-family: $fontfam;
+
+    * {
+        box-sizing: border-box;
+        outline: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+main {
+    display: grid;
+    grid-template-rows: 75vh repeat(auto-fit, 70vh);
+    grid-template-columns: 1fr 1fr;
+}
+
+h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0 0 1em 0;
+    text-transform: uppercase;
+}
+
+#map {
+    grid-column: 1 / -1;
+    svg path {
+        mix-blend-mode: multiply;
+    }
+}
+
+#daily, #hourly, #weekday {
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.dep {
+    fill: $dark;
+    background-color: rgba($dark, 0.3); 
+}
+
+.arr {
+    fill: $orange;
+    background-color: rgba($orange, 0.4);
+}
+
+.axis_lab {
+    font-size: 0.75em;
+}
+
+.y_axis .tick {
+    font-family: $fontfam;
+    text {
+        fill: lighten($fontcol, 20%);
+    }
+
+    line {
+        stroke: lighten($fontcol, 50%);
+        stroke-width: 1px;
+    }
+}
+
+#daily .x_axis .tick {
+
+    text {
+        fill: lighten($fontcol, 33%);
+        font-family: $fontfam;
+        font-weight: 600;
+    }
+
+    line {
+        stroke: darken($bgcol, 7.5%);
+        stroke-width: 1px;
+    }
+}
+

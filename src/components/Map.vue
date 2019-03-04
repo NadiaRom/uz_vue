@@ -1,6 +1,6 @@
 <template>
-    <figure id="Map">
-        <l-map ref="Map"
+    <figure id="map">
+        <l-map
             :zoom.sync="zoom"
             :center="center"
             :bounds="bounds"
@@ -25,7 +25,7 @@
                     :weight="0.5"
                     color="#f77a52"
                     fill-color="#f77a52"
-                    :fill-opacity="0.6"
+                    :fill-opacity="0.75"
                     :bubbling-mouse-events="true"
                     @click="setStation(m.id)"
                 >
@@ -55,7 +55,7 @@
 import 'vue-simple-suggest/lib/polyfills';
 import VueSimpleSuggest from 'vue-simple-suggest';
 import {LMap, LTileLayer, LLayerGroup, LCircle, LTooltip, LPopup} from 'vue2-leaflet';
-import { scalePow } from 'd3-scale';
+import * as d3 from 'd3';
 import { mapActions } from 'vuex'
 
 export default {
@@ -79,13 +79,13 @@ export default {
             },
             zoom: 6,
             bounds: L.latLngBounds(
-                    { 'lat': 44.17, 'lng': 21.55 },
-                    { 'lat': 52.72, 'lng': 40.49 }
+                    { 'lat': 44, 'lng': 21 },
+                    { 'lat': 53, 'lng': 41 }
                 ),
-            scaleR: scalePow()
+            scaleR: d3.scalePow()
                 .exponent(0.5)
                 .domain([100, 40000])
-                .range([2500, 35000]),
+                .range([2500, 45000]),
             center: [48.85, 31.177],
         }
     },
