@@ -72,12 +72,13 @@ export default {
     data() {
         return {
             tileProvider: {
-                name: 'OpenStreetMap',
+                name: 'Stamen',
                 visible: true,
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png'
             },
             zoom: 6,
+            subdomains: 'abcd',
             bounds: L.latLngBounds(
                     { 'lat': 44, 'lng': 21 },
                     { 'lat': 53, 'lng': 41 }

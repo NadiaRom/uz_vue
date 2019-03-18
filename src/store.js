@@ -62,6 +62,11 @@ const getters = {
         d3.max(state.data[state.activeStation].daily, d => d.arrival),
     ]),
 
+    maxWeekday: state => d3.max([
+        d3.max(state.data[state.activeStation].weekdays, d => d.departure),
+        d3.max(state.data[state.activeStation].weekdays, d => d.arrival),
+    ]),
+
 }
 
 // A Vuex instance is created by combining the state, mutations, actions,

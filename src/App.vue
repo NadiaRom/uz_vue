@@ -2,6 +2,8 @@
   <main id="app">
     <Map/>
     <Daily/>
+    <Weekday/>
+    <Hourly/>
   </main>
 </template>
 

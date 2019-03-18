@@ -1,0 +1,18 @@
+@import './vars.scss';
+
+#weekday {
+    margin: 2em 2em 2em 10%;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+
+    svg {
+        // height: 100%;
+        overflow: visible;
+        background: crimson;
+    
+        line {
+            stroke: $bgcol;
+            stroke-width: 2px;
+        }
+    }
+}

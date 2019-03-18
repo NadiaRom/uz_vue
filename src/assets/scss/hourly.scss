@@ -1,0 +1,20 @@
+@import './vars.scss';
+
+#hourly {
+    margin: 2em 10% 2em 2em;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+
+svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    background: lightblue;
+
+    line {
+        stroke: $bgcol;
+        stroke-width: 2px;
+    }
+}

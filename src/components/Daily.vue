@@ -16,10 +16,10 @@
         :transform="`translate(0, ${fs})`">
       </g>
 
-      <path v-bind:d="arrD(stationScaled)"
+      <path v-bind:d="arrPath"
         class="arr"/>
 
-      <path v-bind:d="depD(stationScaled)"
+      <path v-bind:d="depPath"
         class="dep"/>
     </svg>
   </figure>
@@ -59,15 +59,15 @@ export default {
     ]),
 
     scale: function() {
-      const x = d3.scaleTime()
+      let x = d3.scaleTime()
         .domain([new Date('2014-01-01'), new Date('2014-12-31')])
         .range([0, this.svgW]);
 
-      const arr = d3.scaleLinear()
+      let arr = d3.scaleLinear()
         .domain([0, this.maxDaily])
         .range([this.svgH / 2, this.fs]);
 
-      const dep = d3.scaleLinear()
+      let dep = d3.scaleLinear()
         .domain([0, this.maxDaily])
         .range([this.svgH / 2, this.svgH - this.fs]);
 
@@ -108,14 +108,22 @@ export default {
           };
         })
         .sort((a, b) => (a.x < b.x) ? -1 : 1);
+    },
 
+    arrPath: function() {
+      return this.arrD(this.stationScaled);
+    },
+
+    depPath: function() {
+      return this.depD(this.stationScaled);
     },
   },
 
   watch: {
     windowSize: function() {
       this.setSvgDims();
-    }
+    },
+
   },
 
   mounted() {
